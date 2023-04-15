@@ -53,5 +53,7 @@ Todo o processo é executado a partir node.js e gulp-cli (linha de comando)
 - Executar o comando:
 ```
 npm install
+
+gulp serve
+
 ```
-<script src="./node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
