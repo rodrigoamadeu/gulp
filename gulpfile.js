@@ -4,7 +4,7 @@ const concat = require('gulp-concat')
 const cssmin = require('gulp-cssmin')
 const rename = require('gulp-rename')
 const uglify = require('gulp-uglify')
-const image = require('gulp-image')
+const imagemin = require('gulp-imagemin')
 const stripJs = require('gulp-strip-comments')
 const stripCss = require('gulp-strip-css-comments')
 const htmlmin = require('gulp-htmlmin')
@@ -55,8 +55,8 @@ function tarefasJS(callback){
 }
 
 function tarefasImagem(){
-    return gulp.src('.src/images/*')
-        .pipe(image({
+    return gulp.src('./src/images/*')
+        .pipe(imagemin({
             pngquant: true,
             optipng: false,
             zopflipng: true,
@@ -88,7 +88,7 @@ gulp.task ('serve', function(){
         }
     }) // chama a variável do browserSync e inicia ele com .init()
     gulp.watch('./src/**/*').on('change', process)// repete o processo quando altera algo em src
-    gulp.watch('./src/**/*').on('change', reload)   
+    gulp.watch('./src/**/*').on('change', reload) //toda vez que a pasta dist é atualizada ele atualiza  
 })
 
 function end(cb){
