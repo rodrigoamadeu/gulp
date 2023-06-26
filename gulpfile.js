@@ -12,6 +12,7 @@ const strip = require('gulp-strip-comments')
 const babel = require('gulp-babel')
 const browserSync = require('browser-sync').create() //importando a biblioteca com método create
 const reload = browserSync.reload // variável para recarregar
+const sass = require('gulp-sass') (require('node-sass')) 
 
 function tarefasCSS(cb) {
 
@@ -19,17 +20,23 @@ function tarefasCSS(cb) {
             './node_modules/bootstrap/dist/css/bootstrap.css',
             './node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
             './vendor/owl/css/owl.css',
-            './vendor/jquery-ui/jquery-ui.css',
-            './src/css/style.css'
+            './vendor/jquery-ui/jquery-ui.css'
         ])
         .pipe(stripCss())
-        .pipe(concat('styles.css'))
+        .pipe(concat('libs.css'))
         .pipe(cssmin())
         .pipe(rename({ suffix: '.min'}))
         .pipe(gulp.dest('./dist/css'))
     
     return cb()
 
+}
+
+function tarefasSASS(cb) {
+    gulp.src('./src/scss/**/*.scss')
+        .pipe(sass()) 
+        .pipe(gulp.dest('./dist/css'))
+    cb()
 }
 
 function tarefasJS(callback){
@@ -97,11 +104,12 @@ function end(cb){
 }
 
 // series x parallel
-const process = series( tarefasHTML, tarefasJS, tarefasCSS, end)
+const process = parallel( tarefasHTML, tarefasJS, tarefasCSS, tarefasSASS, end)
 
 exports.styles = tarefasCSS
 exports.scripts = tarefasJS
 exports.images = tarefasImagem
+exports.sass = tarefasSASS
 
 exports.default = process
 
